@@ -1,0 +1,51 @@
+void main {
+
+    var1 , var2 : integer ;
+    resultado : float ;
+    var_char : char ;
+  
+    integer minhaFuncao ( integer ; float ) {
+        mf_var1 : integer ;
+
+        inicio
+        mf_var1 = 9.1 ;
+        fim
+
+        return ( 11 )
+    }
+
+    /* isto é um comentário a+b = 3 ; */
+
+    inicio
+    if ( var1 > var2 ) {
+        var2 = var1 ;
+    } else {
+        var1 = 10 ;
+    } ;
+
+    cin >> var1 ;
+    
+    var_char = ' a ' ;
+
+    while ( var1 < var2 ) {
+        var1 = var1 + 1 ;
+    } ;
+
+    for ( var1 = 0 ; var1 != 10 ; ++ 1 ) {
+        cout << ~ test ~ << var1 ;
+    } ;
+
+    cout << ~ literal aqui indo pro COUT ~ ;
+
+    cout << ~ literal aqui indo pro COUT com a variavel var2 ~ << var2 ;
+
+    do {
+        var1 = var1 + 1 ;
+    } while ( var1 != 15 ) ;
+
+    resultado = ( variavel1 + 5 ) / 2 ;
+    resultado = resultado + 10 ;
+    var_string = " minha string aqui dentro " ;
+
+    fim
+}

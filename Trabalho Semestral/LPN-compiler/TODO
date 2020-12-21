@@ -1,0 +1,3 @@
+verificar ',",~ dentro de comentario
+    ideia:
+        colocar verificação de fechamento no final de define_token

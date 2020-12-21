@@ -1,0 +1,24 @@
+void main {
+    var1 , var2 : integer ;
+    var3 : float ;
+
+    /* var_char : char ;
+    var_string : string ; */
+
+    /* um comentário aqui a + b = 3 */
+    /* este é um outro comentário aqui */
+    
+    inicio
+
+    /* var_char = ' a ' ;
+    var_string = " isto eh uma string " ; */
+
+    var3 = var1 + var2 ;
+
+    /* var2 = 2 ;
+    var3 = var1 + var2 ;
+    result = ( var3 / 2 ) / ( var1 - 2 ) ;
+    cout << ~ resultado ~ var3 ; */
+
+    fim
+}

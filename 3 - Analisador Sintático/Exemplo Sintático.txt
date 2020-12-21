@@ -1,0 +1,33 @@
+void main { inicio ; fim }
+2 11 39 15 40 20 38
+
+3) DCLVAR::= î
+19) DCLFUNC::= î
+31) CORPO::= inicio COMANDO ; REPCOMANDO fim
+32) REPCOMANDO ::= î
+38) COMANDO::= î
+
+
+1) BLOCO::= void main { DCLVAR DCLFUNC CORPO }
+			2	11	39	52	53	   54	38			
+31) CORPO::= inicio COMANDO ; REPCOMANDO fim
+			15	65	   40	66	     20
+33) REPCOMANDO::= COMANDO ; REPCOMANDO
+				65	40 	66
+				
+				
+Pilha:					Entrada:				Ação:
+51$						2 11 39 15 40 20 38$	Empilha simbolo inicial
+$						2 11 39 15 40 20 38$	Procura tabParsin (51,2) >> producao 1 desempilha topo
+2 11 39 52 53 54 38$ 	2 11 39 15 40 20 38$	empilha p 1
+52 53 54 38$			15 40 20 38$			Casou 2, 11, 39 - procura tabParsin (52,15) >> p 3  >> desempilha topo
+53 54 38$				15 40 20 38$			procura tabParsin (53,15) >> p 10 >> desempilha topo
+54 38$					15 40 20 38$			procura tabParsin (54,15) >> p 31 >> desempilha topo
+15 65 40 66 20 38$		15 40 20 38$			casou 15
+65 40 66 20 38$			40 20 38$				procura tabParsin(65,40) >> p 38 >> desempilha topo
+40 66 20 38$			40 20 38$				casou 40
+66 20 38$				20 38$					procura tabParsin(66,20) >> p 33 >> desempilha topo
+20 38$					20 38$					casou 20 38
+$						$						sentenca reconhecida
+
+

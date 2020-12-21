@@ -1,0 +1,7 @@
+void main {
+    var1 : integer ;
+    
+    inicio
+    var1 = var1 + 3 ;
+    fim
+}

@@ -1,0 +1,403 @@
+LEXICAL_RESULT_LPN = [
+('void', 2),
+('main', 11),
+('{', 39),
+('var1', 7),
+(',', 43),
+('var2', 7),
+(':', 41),
+('integer', 13),
+(';', 40),
+('var3', 7),
+(',', 43),
+('result', 7),
+(':', 41),
+('float', 19),
+(';', 40),
+('inicio', 15),
+('var3', 7),
+('=', 32),
+('var1', 7),
+('+', 37),
+('var2', 7),
+(';', 40),
+('fim', 20),
+('}', 38),
+]
+
+STACK   = ['$', 51]
+ENTRADA = [2, 11, 39, 7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+----------------------
+PYTHON3 stack example
+
+STACK = [1, 2, 3]
+STACK.append(4)
+STACK = [1, 2, 3, 4]
+STACK.pop()
+STACK = [1, 2, 3]
+----------------------
+
+STACK = []
+ENTRADA = [2, 11, 39, 7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+Empilhar símbolo inicial
+STACK = [$, 51]
+
+51 -> BLOCO::= void main  {  DCLVAR  DCLFUNC  CORPO  } 
+              [ 2    11   39   52       53      54   38  ]
+
+Empilhar:  2, 11, 39, 52, 53, 54, 38
+STACK = [$, 38, 54, 53, 52, 39, 11, 2]
+-------------------
+STACK.pop() = 2
+Token: void
+STACK = [$, 38, 54, 53, 52, 39, 11]
+ENTRADA = [11, 39, 7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 11
+Token: main
+STACK = [$, 38, 54, 53, 52, 39]
+ENTRADA = [39, 7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 39
+Token: {
+STACK = [$, 38, 54, 53, 52]
+ENTRADA = [7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 52
+Token: DCLVAR
+STACK = [$, 38, 54, 53]
+ENTRADA = [7, 43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[52][7] = 2 -> DCLVAR::= nomevariavel REPIDENT  :  TIPO   ;  LDVAR 
+                                      [     7          55     41  56   40    57 ]
+Empilhar: 7, 55, 41, 56, 40, 57
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55]
+ENTRADA = [43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 55
+Token: REPIDENT
+STACK = [$, 38, 54, 53, 57, 40, 56, 41]
+ENTRADA = [43, 7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[55][43] = 5 -> REPIDENT::= ,  nomevariavel  REPIDENT
+                                        [ 43       7          55   ]
+Empilhar: 43, 7, 55
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7, 43]
+-------------------
+STACK.pop() = 43
+Token: ,
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7]
+ENTRADA = [7, 41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55]
+ENTRADA = [41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 55
+Token: REPIDENT
+STACK = [$, 38, 54, 53, 57, 40, 56, 41]
+ENTRADA = [41, 13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[55][41] = 4 -> REPIDENT::= î 
+                                        [ 17 ]
+Empilhar: 17 é vazio, não empilha
+STACK = [$, 38, 54, 53, 57, 40, 56, 41]
+-------------------
+STACK.pop() = 41
+Token: :
+STACK = [$, 38, 54, 53, 57, 40, 56]
+ENTRADA = [13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 56
+Token: TIPO
+STACK = [$, 38, 54, 53, 57, 40]
+ENTRADA = [13, 40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[56][13] = 6 -> TIPO::= integer
+                                      [  13  ]
+Empilhar: 13
+STACK = [$, 38, 54, 53, 57, 40, 13]
+-------------------
+STACK.pop() = 13
+Token: integer
+STACK = [$, 38, 54, 53, 57, 40]
+ENTRADA = [40, 7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 40
+Token: ;
+STACK = [$, 38, 54, 53, 57]
+ENTRADA = [7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 57
+Token: LDVAR
+STACK = [$, 38, 54, 53]
+ENTRADA = [7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[57][7] = 11 -> LDVAR::= LID  :  TIPO ;  LDVAR
+                                      [ 59  41  56  40   57  ]
+Empilhar: 59, 41, 56, 40, 57 
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 59]
+-------------------
+STACK.pop() = 59
+Token: LID
+STACK = [$, 38, 54, 53, 57, 40, 56, 41]
+ENTRADA = [7, 43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[59][7] = 12 -> LID::= nomevariavel REPIDENT 
+                                    [      7         55   ]
+Empilhar: 7, 55
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7]                      
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 58] 
+ENTRADA = [43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 55
+Token: REPIDENT
+STACK = [$, 38, 54, 53, 57, 40, 56, 41] 
+ENTRADA = [43, 7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[55][43] = 5 -> REPIDENT::= , nomevariavel REPIDENT 
+                                        [ 43     7          55   ]
+Empilhar: 43, 7, 55
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7, 43] 
+-------------------
+STACK.pop() = 43
+Token: ,
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55, 7] 
+ENTRADA = [7, 41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 54, 53, 57, 40, 56, 41, 55] 
+ENTRADA = [41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 55
+Token: REPIDENT
+STACK = [$, 38, 54, 53, 57, 40, 56, 41] 
+ENTRADA = [41, 19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[55][41] = 5 -> REPIDENT::= î  
+                                        [ 17 ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 54, 53, 57, 40, 56, 41]
+-------------------
+STACK.pop() = 41
+Token: :
+STACK = [$, 38, 54, 53, 57, 40, 56] 
+ENTRADA = [19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 56
+Token: TIPO
+STACK = [$, 38, 54, 53, 57, 40] 
+ENTRADA = [19, 40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[56][19] = 7 -> TIPO::= float 
+                                     [  19  ]
+Empilhar: 19
+STACK = [$, 38, 54, 53, 57, 40, 19]
+-------------------
+STACK.pop() = 19
+Token: float
+STACK = [$, 38, 54, 53, 57, 40] 
+ENTRADA = [40, 15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 40
+Token: ;
+STACK = [$, 38, 54, 53, 57] 
+ENTRADA = [15, 7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 57
+Token: LDVAR
+STACK = [$, 38, 54, 53] 
+ENTRADA = [15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[57][15] = 10 -> LDVAR::= î  
+                                     [  17  ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 54, 53] 
+-------------------
+STACK.pop() = 53
+Token: DCLFUNC
+STACK = [$, 38, 54] 
+ENTRADA = [15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[53][15] = 19 -> DCLFUNC::= î  
+                                       [  17  ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 54] 
+-------------------
+STACK.pop() = 54
+Token: CORPO
+STACK = [$, 38] 
+ENTRADA = [15, 7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[54][15] = 31 ->  CORPO::= inicio COMANDO  ;  REPCOMANDO  fim  
+                                       [   15      65    40     66       20 ]
+Empilhar: 15, 65, 40, 66, 20
+STACK = [$, 38, 20, 66, 40, 65, 15] 
+-------------------
+STACK.pop() = 15
+Token: inicio
+STACK = [$, 38, 20, 66, 40, 65] 
+ENTRADA = [7, 32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 65
+Token: COMANDO
+STACK = [$, 38, 20, 66, 40] 
+ENTRADA = [7, 32, 7, 37, 7, 40, 20, 38]
+
+tabela_parsing[65][7] = 34 ->  COMANDO::= nomevariavel  =  EXPRESSAO  
+                                         [     7        32     67   ]
+Empilhar: 7, 32, 67
+STACK = [$, 38, 20, 66, 40, 67, 32, 7]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 20, 66, 40, 67, 32]
+ENTRADA = [32, 7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 32
+Token: =
+STACK = [$, 38, 20, 66, 40, 67]
+ENTRADA = [7, 37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 67
+Token: EXPRESSAO
+STACK = [$, 38, 20, 66, 40]
+ENTRADA = [7, 37, 7, 40, 20, 38]
+
+tabela_parsing[67][7] = 75 -> EXPRESSAO::= TERMO REPEXP  
+                                         [   79    80 ]
+Empilhar: 79, 80
+STACK = [$, 38, 20, 66, 40, 80, 79]
+-------------------
+STACK.pop() = 79
+Token: TERMO
+STACK = [$, 38, 20, 66, 40, 80]
+ENTRADA = [7, 37, 7, 40, 20, 38]
+
+tabela_parsing[79][7] =  -> TERMO::= FATOR REPTERMO   
+                                    [  81     82 ]
+Empilhar: 81, 82
+STACK = [$, 38, 20, 66, 40, 80, 82, 81]
+-------------------
+STACK.pop() = 81
+Token: FATOR
+STACK = [$, 38, 20, 66, 40, 80, 82]
+ENTRADA = [7, 37, 7, 40, 20, 38]
+
+tabela_parsing[81][7] = 86 -> FATOR::= nomevariavel   
+                                      [     7      ]
+Empilhar: 7
+STACK = [$, 38, 20, 66, 40, 80, 82, 7]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 20, 66, 40, 80, 82]
+ENTRADA = [37, 7, 40, 20, 38]
+-------------------
+STACK.pop() = 82
+Token: REPTERMO
+STACK = [$, 38, 20, 66, 40, 80]
+ENTRADA = [37, 7, 40, 20, 38]
+
+tabela_parsing[82][37] = 81 -> REPTERMO::= î   
+                                         [ 17 ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 20, 66, 40, 80]
+-------------------
+STACK.pop() = 80
+Token: REPEXP
+STACK = [$, 38, 20, 66, 40]
+ENTRADA = [37, 7, 40, 20, 38]
+
+tabela_parsing[80][37] = 77 -> REPEXP::= +  TERMO  REPEXP    
+                                      [  37   79     80  ]
+Empilhar: 37, 79, 80
+STACK = [$, 38, 20, 66, 40, 80, 79, 37]
+-------------------
+STACK.pop() = 37
+Token: +
+STACK = [$, 38, 20, 66, 40, 80, 79]
+ENTRADA = [7, 40, 20, 38]
+-------------------
+STACK.pop() = 79
+Token: TERMO
+STACK = [$, 38, 20, 66, 40, 80]
+ENTRADA = [7, 40, 20, 38]
+
+tabela_parsing[79][7] =  -> TERMO::= FATOR REPTERMO   
+                                    [  81     82 ]
+Empilhar: 81, 82
+STACK = [$, 38, 20, 66, 40, 80, 82, 81]
+-------------------
+STACK.pop() = 81
+Token: FATOR
+STACK = [$, 38, 20, 66, 40, 80, 82]
+ENTRADA = [7, 40, 20, 38]
+
+tabela_parsing[81][7] = 86 -> FATOR::= nomevariavel    
+                                    [  7  ]
+Empilhar: 7
+STACK = [$, 38, 20, 66, 40, 80, 82, 7]
+-------------------
+STACK.pop() = 7
+Token: nomevariavel
+STACK = [$, 38, 20, 66, 40, 80, 82]
+ENTRADA = [40, 20, 38]
+-------------------
+STACK.pop() = 82
+Token: REPTERMO
+STACK = [$, 38, 20, 66, 40, 80]
+ENTRADA = [40, 20, 38]
+
+tabela_parsing[82][40] = 81 -> REPTERMO::= î
+                                    [  17  ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 20, 66, 40, 80]
+-------------------
+STACK.pop() = 80
+Token: REPEXP
+STACK = [$, 38, 20, 66, 40]
+ENTRADA = [40, 20, 38]
+
+tabela_parsing[80][40] = 79 -> REPEXP::= î 
+                                    [  17  ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 20, 66, 40]
+-------------------
+STACK.pop() = 40
+Token: ;
+STACK = [$, 38, 20, 66]
+ENTRADA = [20, 38]
+-------------------
+STACK.pop() = 66
+Token: REPCOMANDO
+STACK = [$, 38, 20]
+ENTRADA = [20, 38]
+
+tabela_parsing[66][20] = 32 -> REPCOMANDO ::= î  
+                                            [ 17 ]
+Empilhar: 17 não empilha
+STACK = [$, 38, 20]
+-------------------
+STACK.pop() = 20
+Token: fim
+STACK = [$, 38]
+ENTRADA = [38]
+-------------------
+STACK.pop() = 38
+Token: CORPO
+STACK = [$]
+ENTRADA = []
+
+FIM: Código reconhecido! Não há erros sintáticos.

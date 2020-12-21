@@ -1,0 +1,151 @@
+------------------
+TABELA DE SÍMBOLOS
+------------------
+
+A análise semântica constitui-se, em linhas gerais,
+de um verificador de tipos.
+É de sua responsabilidade verificar se um operador
+contém operandos do mesmo tipo, se uma variável foi declarada,
+entre outras atribuições.
+Se alguma dessas condições não for satisfeita, o
+sistema reportará um erro semântico. 
+
+Nos compiladores usuais, compiladores dirigidos pela
+sintaxe, o analisador sintático ativa a execução das
+ações semânticas sempre que forem atingidos
+determinados estados do reconhecimento ou sempre
+que determinadas transições ocorrerem durante a
+análise do programa fonte.
+
+Deve-se então incluir na gramática símbolos que
+indicam as ações semânticas a serem efetuadas
+no processo de compilação.
+
+Neste caso o algoritmo da análise sintática deve
+ser alterado para que, ao detectar um símbolo de
+ação semântica no topo da pilha sintática, retire-o do
+topo da pilha e execute a ação semântica
+correspondente.
+
+A análise semântica, trabalha com uma tabela chamada de
+“tabela de símbolos” e com o decorrer das ações
+semânticas encontradas na gramática esta tabela é
+preenchida ou não.
+
+A tabela de símbolos armazena informações relativas aos
+identificadores encontrados no programa fonte durante o
+processo de compilação. Sua organização depende da
+estrutura da linguagem que está sendo implementada.
+
+As linhas da tabela de símbolos devem conter as seguintes
+informações:
+
+- NOME.......: nome do identificador
+- CATEGORIA..: variavel, procedure, parametro
+- TIPO.......: void, integer, float, char, string
+- NÍVEL......: main, nome_da_funcao, etc.
+
+As operações para a manipulação da tabela de símbolos
+são:
+
+- BUSCA: verifica a existência de um identificador na tabela
+de símbolos. Caso afirmativo efetua as ações pertinentes.
+Caso negativo indica a condição de erro: “identificador não
+declarado”.
+
+- INSERÇÃO: verifica a existência de um identificador na
+tabela de símbolos. Caso afirmativo, indica condição de erro:
+“identificador já declarado”, caso negativo insere na tabela.
+
+- REMOÇÃO: retira os nomes da tabela de símbolos. Não
+pode esquecer de verificar o nível que está retirando.
+
++-------------------------------------------------------+
+|    NOME   |    CATEGORIA    |    TIPO    |    NÍVEL   |
++-------------------------------------------------------+
+     var1        variavel        integer         main
+
+/**
+* ! ALGORITMO PARA DEFINIÇÃO DO NÍVEL (ESCOPO) !
+
+NIVEL = [main]
+
+if TOKEN == ; (40) and TOKEN+1 in GRA.types:
+NIVEL.append(TOKEN+2)
+
+if TOKEN == return (4):
+NIVEL.pop()
+
+NIVEL = [main, soma]
+NIVEL = [main, soma, soma2]
+*/
+
+/*
+ALGORITMO PARA INSERÇÃO DE VARIÁVEIS E SEUS TIPOS NA TABELA DE SÍMBOLOS
+
+DCL_VAR   = False
+DCL_FUNC  = False
+DCL_CORPO = False
+
+var1 , var2 : integer ;
+
+DLC_VAR = True  # declarando variaveis
+
+variaveis = []
+TOKEN == 7:
+    variaveis.append()
+TOKEN == 41:
+    for var in variaveis:
+        insere_tab_simb(var, 7, categoria=variavel, tipo=TOKEN+1, nivel=NIVEL)
+
+TOKEN == ; :
+    if TOKEN+1 in GRA.types:  # acabou declaração de VARIÁVEIS
+        DCL_VAR = False
+        DCL_FUNC = True
+
+    if TOKEN+1 == inicio:
+        DCL_VAR = False
+        DCL_CORPO = True
+    
+    else:
+        continue
+*/
+
+/*
+        Trigger Semântico
+        [65][1] -> 52 COMANDO::=    while   ( nomevariavel COMPARACAO) { COMANDO ; REPCOMANDO }
+        [65][16] -> 49 COMANDO::=   if      ( nomevariavel COMPARACAO) { COMANDO ; REPCOMANDO } ELSEPARTE
+        [65][7] -> 34 COMANDO nomevariavel = EXPRESSAO
+        [65][18] -> 64 COMANDO::= for (nomevariavel = CONTCOMPARACAO; nomevariavel COMPARACAO; INCREMENTO) { COMANDO ; REPCOMANDO } 
+        [65][23] -> 67 COMANDO::= do { COMANDO ; REPCOMANDO } while ( nomevariavel COMPARACAO) 
+        [65][24] -> 69 COMANDO::= cout << literal SEQCOUT 
+        [65][25] -> 68 COMANDO::= cin >> nomevariavel
+
+
+        [62][7] -> 22) VALORRETORNO::= nomevariavel
+
+        
+        [65][27] -> 39 COMANDO callfuncao nomevariavel PARAMETROS
+
+        int soma(int a, int b) {
+            int c = 5;
+            
+            return a + b;
+        }
+*/
+
+
+
+
+# TODO: paramos aqui, não testamos este trecho
+            # token == 7
+            # token.name?
+            # LEXOUT[self._INDEX] = 'x'
+
+            #rever
+            # teoricamente é pra estar fazendo sim...
+            #
+            # LEXICAL_OUTPUT = [
+            # ('void', 2),
+            # ...
+            # LEXOUT[index = 0][0] = 'void'
